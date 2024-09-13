@@ -12,3 +12,40 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+ id               Int         @id @default(autoincrement())
+ cnpj             String      @unique
+ businessName     String
+ tradingName      String
+ contracts        Contract[]
+}
+
+model Contract {
+  id              Int         @id @default(autoincrement())
+  name            String
+  contractCode    String      @unique
+  retention       Decimal
+  author          User        @relation(fields: [authorId], references:[id])
+  authorId        Int
+  invoice         Invoice?
+}
+
+model Invoice {
+  id              Int         @id @default(autoincrement())
+  invoiceNumber   Int         @unique
+  issueDate       DateTime
+  dueDate         DateTime
+  amount          Decimal
+  issqn           Decimal?
+  irrf            Decimal?
+  csll            Decimal?
+  cofins          Decimal?
+  inss            Decimal?
+  pis             Decimal?
+  retentionAmount Decimal
+  percentage      Decimal
+  pdfUrl          String
+  author          Contract    @relation(fields: [authorId], references:[id])
+  authorId        Int         @unique
+}
