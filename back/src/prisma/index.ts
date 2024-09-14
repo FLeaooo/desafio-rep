@@ -48,7 +48,7 @@ async function main() {
   const invoice = await prisma.invoice.create({
     data: {
       invoiceNumber: 12345,
-      issueDate: ('2024-09-14T10:00:00.000Z'),
+      issueDate: '2024-09-14T10:00:00.000Z',
       dueDate: '2024-10-14T10:00:00.000Z',
       amount: 1000.00,
       issqn: 50.00,

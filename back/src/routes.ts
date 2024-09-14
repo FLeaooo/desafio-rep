@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { getAllUsers, createUser, getUserByCnpj } from '@/controllers/userController';
 import { getAllContracts, getContractById } from '@/controllers/contractController';
+import { getAllInvoices, getInvoiceById, createInvoice } from '@/controllers/invoiceController';
 
 const router = Router();
 
@@ -15,5 +16,12 @@ router.post('/users', createUser);
 router.get('/contracts', getAllContracts);
 
 router.get('/contract/:id', getContractById);
+
+// Routes invoices
+router.get('/invoices', getAllInvoices);
+
+router.get('/invoice/:id', getInvoiceById);
+
+router.post('/invoices', createInvoice);
 
 export default router;
