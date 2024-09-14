@@ -3,9 +3,9 @@ import { getAllUsers, createUser, getUserByCnpj } from './controllers/userContro
 
 const router = Router();
 
-router.get('/users/', getAllUsers);
+router.get('/users', getAllUsers);
 
-router.get('/users/:id', getUserByCnpj);
+router.get('/user/:cnpj', getUserByCnpj);
 
 router.post('/users', createUser);
 
