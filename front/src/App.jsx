@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import AppRoutes from '@/Route.jsx'
 import Footer from '@/components/atomic/atoms/Footer'
+import './global.css'
 
 function App() {
 

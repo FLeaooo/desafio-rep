@@ -9,7 +9,7 @@ const InvoiceForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="">
 
-      <div className="border-[1.5px] border-red-400 mb-6 mt-4 rounded-md mx-8 p-4">
+      <div className="red-div">
         <div className="flex justify-around items-center">
           <p className="font-semibold">
             Codigo do contrato: <span className="font-normal">11002200-01</span>

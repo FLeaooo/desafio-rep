@@ -2,7 +2,7 @@ import React from 'react';
 
 const InfoUser = () => {
   return (
-    <div className="border-2 border-red-400 rounded-md p-4 mx-8 mt-2 flex justify-between">
+    <div className="red-div mt-2 flex justify-between">
       <div>
         <p className="font-semibold">
           Razão Social: <span className="font-normal">Razão Social do Fornecedor Logado</span>
