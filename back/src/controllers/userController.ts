@@ -10,10 +10,12 @@ export const getAllUsers = async (req: Request, res: Response): Promise<void> =>
   }
 }
 
-export const getUserByCnpj = async (req: Request, res: Response): Promise<void> => {
-  const { cnpj } = req.params;
+export const loginUser = async (req: Request, res: Response): Promise<void> => {
+  const { cnpj } = req.body;
 
+  console.log(cnpj);
   try {
+    console.log(cnpj);
     const user = await prisma.user.findUnique({
       where: { cnpj: cnpj }
     });
@@ -21,9 +23,11 @@ export const getUserByCnpj = async (req: Request, res: Response): Promise<void> 
     if (user) {
       res.status(200).json(user);
     } else {
+      console.log(cnpj);
       res.status(404).json({ error: 'User not found.' });
     }
   } catch (error) {
+    console.log(cnpj);
     res.status(400).json({ error: 'Error fetching user.' });
   }
 };
