@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState }from 'react';
 import { useForm } from 'react-hook-form';
+import '@/components/atomic/organisms/InvoiceForm.css'
+import Input from '@/components/atomic/molecules/Input'
 
 const InvoiceForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = (data) => console.log(data);
 
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = (event) => {
+    setIsChecked(event.target.checked);
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="">
@@ -21,59 +28,48 @@ const InvoiceForm = () => {
 
         <div className="grid grid-cols-3 gap-4 mt-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Número da Nota</label>
-            <input {...register('noteNumber', { required: true })}
-              type="number"
-              className={`mt-1 block w-full px-3 py-2 border border-blue-300 rounded-md ${errors?.name ? "input-error" : " "}`} />
-              {errors?.noteNumber?.type === "required" && (
-              <p className="text-red-600 text-sm mt-1">Número da nota é obrigatório</p>
-              )}
+            <Input register={register} name="noteNumber" label="Numero" type="number" errors={errors}/>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Data de Emissão</label>
-            <input type="date" 
-              {...register('issueDate', { required: true })}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
-              {errors?.issueDate?.type === "required" && (
-                <p className="text-red-600 text-sm mt-1"> Data de emissão é obrigatório</p>
-              )}
+            <Input register={register} name="issueDate" label="Data de emissão" type="date" errors={errors}/>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Data de Vencimento</label>
-            <input type="date" {...register('dueDate')} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
+            <Input register={register} name="dueDate" label="Data de vencimento" type="date" errors={errors}/>
           </div>
         </div>
 
         <div className="mt-4">
-          <label className="block text-sm font-medium text-gray-700">Valor</label>
-          <input {...register('value')} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" defaultValue="R$ 159,26" />
+          <Input register={register} name="value" label="Valor" type="number" errors={errors}/>
         </div>
 
         <div className="mt-6">
-          <h3 className="text-lg font-semibold">Retenção de Impostos</h3>
-          <div className="grid grid-cols-6 gap-4 mt-2">
-            {['ISSQN', 'IRRF', 'CSLL', 'COFINS', 'INSS', 'PIS'].map((imposto) => (
-              <div key={imposto}>
-                <label className="block text-sm font-medium text-gray-700">{imposto}</label>
-                <input {...register(imposto.toLowerCase())} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" />
-              </div>
-            ))}
+            <div className="flex">
+              <input type="checkbox" name="checkboxTax" checked={isChecked} onChange={handleCheckboxChange}/>
+              <h3 className="text-lg font-semibold ps-3">Retenção de Impostos</h3>
+            </div>
+          <div className="relative border-[1.5px] border-red-400 mb-6 mt-4 rounded-md p-4">
+            <h3 className="absolute -top-3 bg-white px-3 text-bold">Dados</h3>
+            <div className="grid grid-cols-6 gap-4 mt-2">
+              {['ISSQN', 'IRRF', 'CSLL', 'COFINS', 'INSS', 'PIS'].map((tax) => (
+                <div key={tax}>
+                  <Input register={register} name={tax.toLowerCase()} label={tax} type="number" errors={errors} requiredState={isChecked} disabled={!isChecked}/>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
         <div className="mt-6">
           <h3 className="text-lg font-semibold">Retenção Técnica</h3>
           <div className="grid grid-cols-2 gap-4 mt-2">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Valor</label>
-              <input {...register('technicalRetentionValue')} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" defaultValue="R$ 23,85" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Percentual</label>
-              <input {...register('technicalRetentionPercentage')} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md" defaultValue="15" />
-            </div>
+            <p className="font-semibold">
+              Valor (calculado automaticamente): <span className="font-normal">R$ 100</span>
+            </p>
+            <p className="font-semibold">
+              Percentual (com base no contrato): <span className="font-normal">15%</span>
+            </p>
           </div>
         </div>
       </div>
