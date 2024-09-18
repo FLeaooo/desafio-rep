@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import '@/components/atomic/organisms/InvoiceForm.css';
 import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import '@/components/atomic/organisms/InvoiceForm.css';
@@ -112,14 +113,23 @@ const InvoiceForm = () => {
         </div>
 
         <div className="mt-6">
-          <h3 className="text-lg font-semibold">Retenção Técnica</h3>
-          <div className="grid grid-cols-2 gap-4 mt-2">
-            <p className="font-semibold">
-              Valor (calculado automaticamente): <span className="font-normal">R${valueRetention}</span>
-            </p>
-            <p className="font-semibold">
-              Percentual (com base no contrato): <span className="font-normal">{selectedContract.retention}%</span>
-            </p>
+          <div className="flex">
+            <h3 className="text-lg font-semibold ps-3">Retenção Técnica</h3>
+          </div>
+
+          <div className="relative border-[1.5px] border-red-400 mb-6 mt-4 rounded-md p-4">
+            <h3 className="absolute -top-3 bg-white px-3 text-bold">Dados</h3>
+
+            <div className="grid grid-cols-2 gap-4 mt-2">
+              <div>
+              <p className="font-semibold"> Valor:</p>
+                <span className="font-normal input disabled-input">R${valueRetention}</span>
+              </div>
+              <div>
+                <p className="font-semibold"> Percentual:</p>
+                  <span className="font-normal input disabled-input">{selectedContract.retention}%</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

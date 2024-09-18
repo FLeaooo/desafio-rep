@@ -43,7 +43,7 @@ const ContractsTable = () => {
                   <td className="ps-3">{contract.name}</td>
                 </div>
                 <td className="border px-4 py-2 text-center">{contract.contractCode}</td>
-                <td className="border px-4 py-2 text-center bg-blue-800 text-white">{contract.retention}</td>
+                <td className="border px-4 py-2 text-center bg-blue-800 text-white">{contract.retention}%</td>
                 <td className="border px-4 py-2 text-center">
                   <button className="text-blue-500 hover:underline">🔍</button>
                 </td>
