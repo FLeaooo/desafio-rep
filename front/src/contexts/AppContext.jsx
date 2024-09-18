@@ -19,7 +19,7 @@ const defaultInvoice = {
   id: null,
   invoiceNumber: null,
   issueDate: "2024-10-09",
-  dueDate: "2024-18-09",
+  dueDate: "2024-10-09",
   amount: null,
   issqn: null,
   irrf: null,

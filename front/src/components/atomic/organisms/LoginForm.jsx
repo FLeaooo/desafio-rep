@@ -29,10 +29,6 @@ const LoginForm = () => {
             businessName: response.data.businessName,
             tradingName: response.data.tradingName,
           });
-          setContracts(response.data.contracts || []);
-
-          updateAllInvoices(response.data.contracts);
-
           navigate("/contracts");
         }
       }
