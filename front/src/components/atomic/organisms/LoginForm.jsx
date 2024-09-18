@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from '@/api/userApi'
-import axios from "axios";
 import AppContext from '@/contexts/AppContext'
 
 
@@ -10,7 +9,7 @@ const LoginForm = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const { user, setUserData } = useContext(AppContext);
+  const { user, setUserData, setContracts, updateAllInvoices } = useContext(AppContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -19,14 +18,23 @@ const LoginForm = () => {
     try {
       const response = await loginUser(cnpjLogin)
 
-      console.log(response.data)
       if (response.status == 200) {
-        setUserData({
-          cnpj: response.data.cnpj,
-          businessName: response.data.businessName,
-          tradingName: response.data.tradingName,
-        });
-        navigate("/contracts");
+
+        if (response.data.contracts.length == 0) {
+          setError("CNPJ sem contratos ativos");
+
+        } else {
+          setUserData({
+            cnpj: response.data.cnpj,
+            businessName: response.data.businessName,
+            tradingName: response.data.tradingName,
+          });
+          setContracts(response.data.contracts || []);
+
+          updateAllInvoices(response.data.contracts);
+
+          navigate("/contracts");
+        }
       }
     } catch (err) {
       if (err.status == 404) {

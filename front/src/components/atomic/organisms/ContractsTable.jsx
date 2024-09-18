@@ -1,6 +1,26 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import AppContext from '@/contexts/AppContext'
+import { useNavigate } from "react-router-dom";
+
 
 const ContractsTable = () => {
+  const { contracts } = useContext(AppContext);
+
+  const [selectedContract, setSelectedContract] = useState(null);
+
+  const navigate = useNavigate();
+
+  const [idContract, setIdContract] = useState(0);
+
+  const handleCheckbox = (index) => {
+    setSelectedContract(index);
+    setIdContract(contracts[index].id)
+  }
+
+  const handleButtonNext = () => {
+    navigate(`/invoice/${idContract}`)
+  }
+
   return (
     <div>
       <div className="mt-1 mx-8">
@@ -14,19 +34,15 @@ const ContractsTable = () => {
             </tr>
           </thead>
           <tbody>
-            {[
-              { name: "Título do primeiro contrato de exemplo", code: "11002200-01", retention: "5%" },
-              { name: "Título do segundo contrato de exemplo", code: "11002200-01", retention: "10%" },
-              { name: "Título do terceiro contrato de exemplo", code: "11002200-01", retention: "5%" },
-              { name: "Título do quarto contrato de exemplo", code: "11002200-01", retention: "15%" },
-              { name: "Título do quinto contrato de exemplo", code: "11002200-01", retention: "5%" },
-              { name: "Título do sexto contrato de exemplo", code: "11002200-01", retention: "15%" },
-              { name: "Título do sétimo contrato de exemplo", code: "11002200-01", retention: "5%" },
-              { name: "Título do oitavo contrato de exemplo", code: "11002200-01", retention: "10%" },
-            ].map((contract, index) => (
+            {contracts.map((contract, index) => (
               <tr key={index} className="bg-white hover:bg-gray-100">
-                <td className="border px-4 py-2">{contract.name}</td>
-                <td className="border px-4 py-2 text-center">{contract.code}</td>
+                <div className="flex w-full border px-4 py-2 ">
+                  <input type="checkbox"
+                          checked={selectedContract === index}
+                          onChange={() => handleCheckbox(index)}/>
+                  <td className="ps-3">{contract.name}</td>
+                </div>
+                <td className="border px-4 py-2 text-center">{contract.contractCode}</td>
                 <td className="border px-4 py-2 text-center bg-blue-800 text-white">{contract.retention}</td>
                 <td className="border px-4 py-2 text-center">
                   <button className="text-blue-500 hover:underline">🔍</button>
@@ -41,7 +57,8 @@ const ContractsTable = () => {
         <button className="bg-yellow-400 text-black font-semibold py-2 px-6 rounded-lg mx-3">
           Anterior
         </button>
-        <button className="bg-green-500 text-white font-semibold py-2 px-6 rounded-lg">
+        <button className="bg-green-500 text-white font-semibold py-2 px-6 rounded-lg"
+                onClick={handleButtonNext}>
           Próximo
         </button>
       </div>

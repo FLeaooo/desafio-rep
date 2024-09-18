@@ -4,10 +4,9 @@ import { createContext, useState, useEffect } from 'react';
 const AppContext = createContext({
   user: null,
   contracts: [],
-  invoice: null,
   setUserData: () => {},
   setContracts: () => {},
-  setInvoiceData: () => {},
+  updateInvoiceForContract: () => {},
 });
 
 // Função para obter dados do localStorage
@@ -16,11 +15,37 @@ const getDataFromLocalStorage = (key) => {
   return storedData ? JSON.parse(storedData) : null;
 };
 
+const defaultInvoice = {
+  id: null,
+  invoiceNumber: null,
+  issueDate: "2024-10-09",
+  dueDate: "2024-18-09",
+  amount: null,
+  issqn: null,
+  irrf: null,
+  csll: null,
+  cofins: null,
+  inss: null,
+  pis: null,
+  retentionAmount: 0,
+  percentage: 0,
+  pdfUrl: "",
+  authorId: null,
+};
+
 export const AppProvider = ({ children }) => {
-  // Estado para armazenar os dados do usuário, contratos e invoice
   const [user, setUser] = useState(getDataFromLocalStorage('user') || null);
   const [contracts, setContracts] = useState(getDataFromLocalStorage('contracts') || []);
-  const [invoice, setInvoice] = useState(getDataFromLocalStorage('invoice') || null);
+
+   const updateAllInvoices = (updatedContracts) => {
+    const newContracts = updatedContracts.map((contract) => {
+      return {
+        ...contract,
+        invoice: contract.invoice || { ...defaultInvoice },
+      };
+    });
+    setContracts(newContracts);
+  };
 
   // Atualiza o localStorage quando os dados são alterados
   useEffect(() => {
@@ -39,16 +64,8 @@ export const AppProvider = ({ children }) => {
     }
   }, [contracts]);
 
-  useEffect(() => {
-    if (invoice) {
-      localStorage.setItem('invoice', JSON.stringify(invoice));
-    } else {
-      localStorage.removeItem('invoice');
-    }
-  }, [invoice]);
-
   return (
-    <AppContext.Provider value={{ user, contracts, invoice, setUserData: setUser, setContracts, setInvoiceData: setInvoice }}>
+    <AppContext.Provider value={{ user, contracts, setUserData: setUser, setContracts, updateAllInvoices }}>
       {children}
     </AppContext.Provider>
   );
