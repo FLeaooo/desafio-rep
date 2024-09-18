@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from '@/api/userApi'
 import axios from "axios";
-import UserContext from '@/contexts/UserContext'
+import AppContext from '@/contexts/AppContext'
 
 
 const LoginForm = () => {
@@ -10,7 +10,7 @@ const LoginForm = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const { cnpj, businessName, tradingName, setUserData } = useContext(UserContext);
+  const { user, setUserData } = useContext(AppContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
