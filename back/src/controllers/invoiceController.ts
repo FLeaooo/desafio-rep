@@ -25,11 +25,9 @@ export const getInvoiceById = async (req: Request, res: Response): Promise<void>
 }
 
 export const createInvoice = async (req: Request, res: Response): Promise<void> => {
-  const { invoiceNumber, issueDate, dueDate, amount, issqn, irrf, csll, cofins, inss, pis, retentionAmount, percentage, pdfUrl, contractId } = req.body;
-  
   try {
     const contract = await prisma.contract.findUnique({
-      where: { id: contractId },
+      where: { id: parseInt(req.body.contractId) },
     })
 
     if (!contract) {
@@ -37,22 +35,25 @@ export const createInvoice = async (req: Request, res: Response): Promise<void> 
       return;
     }
 
+    const issueDate = new Date(req.body.issueDate).toISOString();
+    const dueDate = new Date(req.body.dueDate).toISOString();
+
     const newInvoice = await prisma.invoice.create({
       data: {
-        invoiceNumber,
-        issueDate,
-        dueDate,
-        amount,
-        issqn,
-        irrf,
-        csll,
-        cofins,
-        inss,
-        pis,
-        retentionAmount,
-        percentage,
-        pdfUrl,
-        authorId: contractId,
+        invoiceNumber: req.body.invoiceNumber,
+        issueDate: issueDate,
+        dueDate: dueDate,
+        amount: req.body.amount,
+        issqn: req.body.issqn,
+        irrf: req.body.irrf,
+        csll: req.body.csll,
+        cofins: req.body.cofins,
+        inss: req.body.inss,
+        pis: req.body.pis,
+        retentionAmount: req.body.retentionAmount,
+        percentage: req.body.percentage,
+        pdfUrl: req.body.pdfUrl,
+        authorId: contract.id,
       },
     });
     res.status(201).json(newInvoice);

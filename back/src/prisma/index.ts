@@ -12,18 +12,6 @@ async function main() {
   // });
 
 
-  // const contract = await prisma.contract.create({
-  //   data: {
-  //     name: "Contrato2",
-  //     contractCode: "Ca0d9ax2",
-  //     retention: 10,
-  //     author: {
-  //       connect: {
-  //         id: 1,
-  //       }
-  //     }
-  //   }
-  // })
 
   // const user = await prisma.user.create({
   //   data: {
@@ -45,27 +33,50 @@ async function main() {
   //   }
   // });
 
-  const invoice = await prisma.invoice.create({
+  // const invoice = await prisma.invoice.create({
+  //   data: {
+  //     invoiceNumber: 12345,
+  //     issueDate: '2024-09-14T10:00:00.000Z',
+  //     dueDate: '2024-10-14T10:00:00.000Z',
+  //     amount: 1000.00,
+  //     issqn: 50.00,
+  //     irrf: 30.00,
+  //     csll: 20.00,
+  //     cofins: 15.00,
+  //     inss: 25.00,
+  //     pis: 10.00,
+  //     retentionAmount: 150.00,
+  //     percentage: 10.00,
+  //     pdfUrl: "https://example.com/invoice/12345.pdf",
+  //     authorId: 1,
+  //   },
+  // })
+
+  // const user = await prisma.user.findUnique({
+  //   where: { cnpj: "12.345.678/0001-00" },
+  //   include: {
+  //     contracts: {
+  //       include: {
+  //         invoice: true
+  //       }
+  //     }
+  //   }
+  // })
+
+  const contract = await prisma.contract.create({
     data: {
-      invoiceNumber: 12345,
-      issueDate: '2024-09-14T10:00:00.000Z',
-      dueDate: '2024-10-14T10:00:00.000Z',
-      amount: 1000.00,
-      issqn: 50.00,
-      irrf: 30.00,
-      csll: 20.00,
-      cofins: 15.00,
-      inss: 25.00,
-      pis: 10.00,
-      retentionAmount: 150.00,
-      percentage: 10.00,
-      pdfUrl: "https://example.com/invoice/12345.pdf",
-      authorId: 1,
-    },
+      name: "Contrato34",
+      contractCode: "B4",
+      retention: 10,
+      author: {
+        connect: {
+          id: 7,
+        }
+      }
+    }
   })
 
   // const contracts = await prisma.contract.findMany();
-  console.log('Show invoice:', invoice);
   // console.log('Show contracst:', contracts);
 }
 

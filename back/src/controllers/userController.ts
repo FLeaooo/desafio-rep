@@ -17,7 +17,14 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
   try {
     console.log(cnpj);
     const user = await prisma.user.findUnique({
-      where: { cnpj: cnpj }
+      where: { cnpj: cnpj },
+      include: {
+        contracts: {
+          include: {
+            invoice: true
+          }
+        }
+      }
     });
 
     if (user) {
