@@ -134,9 +134,9 @@ const InvoiceForm = () => {
         </div>
       </div>
 
-      <div className="flex justify-between mt-6">
-        <button type="button" className="px-4 py-2 bg-yellow-500 text-white rounded">Anterior</button>
-        <button type="submit" className="px-4 py-2 bg-green-500 text-white rounded">Próximo</button>
+      <div className="flex justify-end mt-6">
+        <button type="button" className="px-4 py-2 bg-yellow-500 text-white rounded w-[200px] mx-3">Anterior</button>
+        <button type="submit" className="px-4 py-2 bg-green-500 text-white rounded w-[200px] mx-3">Próximo</button>
       </div>
     </form>
   );

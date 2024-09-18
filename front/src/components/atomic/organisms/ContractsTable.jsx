@@ -54,10 +54,10 @@ const ContractsTable = () => {
       </div>
 
       <div className="flex justify-end mt-6 mx-8 mb-5">
-        <button className="bg-yellow-400 text-black font-semibold py-2 px-6 rounded-lg mx-3">
+        <button className="bg-yellow-400 text-black font-semibold py-2 px-6 rounded-lg mx-3 w-[200px]">
           Anterior
         </button>
-        <button className="bg-green-500 text-white font-semibold py-2 px-6 rounded-lg"
+        <button className="bg-green-500 text-white font-semibold py-2 px-6 rounded-lg w-[200px]"
                 onClick={handleButtonNext}>
           Próximo
         </button>
