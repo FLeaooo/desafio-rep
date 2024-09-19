@@ -1,10 +1,10 @@
 import React from 'react';
 import logo from '@/assets/logo.png';
 
-const Logo = () => {
+const Logo = ({ size = 200 }) => {
   return (
-    <div className="bg-blue-800 inline-block m-5 p-2 select-none">
-      <img src={logo} alt="Logo" className="w-[140px]" />
+    <div className={`bg-blue-800 inline-block m-5 p-2 select-none w-[${size}px]`}>
+      <img src={logo} alt="Logo"/>
     </div>
   );
 };
