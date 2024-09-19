@@ -65,12 +65,12 @@ async function main() {
 
   const contract = await prisma.contract.create({
     data: {
-      name: "Contrato34",
-      contractCode: "B4",
+      name: "Contrato1  3",
+      contractCode: "aA13",
       retention: 10,
       author: {
         connect: {
-          id: 7,
+          id: 11,
         }
       }
     }
