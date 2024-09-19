@@ -53,7 +53,7 @@ const ContractsTable = () => {
                 <td className="border px-4 py-2 text-center">{contract.id}</td>
                 <td className="border px-4 py-2 text-center bg-blue-800 text-white">{contract.retention}%</td>
                 <td className="border px-4 py-2 text-center">
-                  <button className="text-blue-500 hover:underline" onClick={() => detailsContract(index)}>d</button>
+                  <button className="text-blue-500 hover:underline" onClick={() => detailsContract(index)}>🔍</button>
                 </td>
               </tr>
             ))}

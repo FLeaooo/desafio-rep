@@ -1,24 +1,28 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import '@/components/atomic/organisms/InvoiceForm.css';
-import Input from '@/components/atomic/molecules/Input';
 import AppContext from '@/contexts/AppContext';
 import { sendData } from '@/api/invoiceApi'
 import { useNavigate } from "react-router-dom";
+
+// components
 import HeaderContract from '@/components/atomic/molecules/HeaderContract'
+import Input from '@/components/atomic/molecules/Input';
+import '@/components/atomic/organisms/InvoiceForm.css';
+import FileUpload from '@/components/atomic/molecules/FileUpload';
 
 const InvoiceForm = () => {
   // Formulario
-  const { register, handleSubmit, formState: { errors }, watch } = useForm();
+  const { register, handleSubmit, setValue, formState: { errors }, watch } = useForm();
   const [isChecked, setIsChecked] = useState(false);
   const handleCheckboxChange = (event) => {
     setIsChecked(event.target.checked);
   };
   const onSubmit = async (data) => {
+
+    data.invoiceNumber = parseInt(data.invoiceNumber);
     data.retentionAmount = valueRetention;
     data.percentage = selectedContract.retention;
-    data.pdfUrl = "LinkTeste";
     data.contractId = parseInt(contractId, 10);
     console.log(data)
 
@@ -72,6 +76,8 @@ const InvoiceForm = () => {
   const handleButtonPrev = () => {
     navigate(`/contracts/${user.cnpj}`)
   }
+
+
 
   if (!selectedContract) {
     return <p>Carregando contrato...</p>;
@@ -137,6 +143,7 @@ const InvoiceForm = () => {
               </div>
             </div>
           </div>
+          <FileUpload register={register} setValue={setValue}/>
         </div>
       </div>
 

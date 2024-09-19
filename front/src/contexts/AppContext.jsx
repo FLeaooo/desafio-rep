@@ -29,7 +29,7 @@ const defaultInvoice = {
   pis: null,
   retentionAmount: 0,
   percentage: 0,
-  pdfUrl: "",
+  pdf: null,
   authorId: null,
 };
 
