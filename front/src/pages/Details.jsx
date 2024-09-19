@@ -2,7 +2,7 @@ import React from 'react';
 import HeaderTable from '@/components/atomic/atoms/HeaderTable';
 import HeaderPage from '@/components/atomic/molecules/HeaderPage';
 import InfoUser from '@/components/atomic/molecules/InfoUser';
-import InvoiceForm from '@/components/atomic/organisms/InvoiceForm';
+import InvoiceDetails from '@/components/atomic/organisms/InvoiceDetails';
 import Footer from '@/components/atomic/atoms/Footer'
 
 const Invoice = () => {
@@ -15,7 +15,7 @@ const Invoice = () => {
 
       <HeaderTable name="Detalhes do contrato"/>
 
-      <InvoiceForm />
+      <InvoiceDetails />
 
       <Footer />
     </div>

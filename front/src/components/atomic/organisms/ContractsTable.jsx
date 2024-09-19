@@ -21,6 +21,14 @@ const ContractsTable = () => {
     navigate(`/invoice/${idContract}`)
   }
 
+  const handleButtonPrev = () => {
+    navigate("/")
+  }
+
+  const detailsContract = (index) => {
+    navigate(`/details/${contracts[index].id}`)
+  }
+
   return (
     <div>
       <div className="mt-1 mx-8">
@@ -42,10 +50,10 @@ const ContractsTable = () => {
                           onChange={() => handleCheckbox(index)}/>
                   <td className="ps-3">{contract.name}</td>
                 </div>
-                <td className="border px-4 py-2 text-center">{contract.contractCode}</td>
+                <td className="border px-4 py-2 text-center">{contract.id}</td>
                 <td className="border px-4 py-2 text-center bg-blue-800 text-white">{contract.retention}%</td>
                 <td className="border px-4 py-2 text-center">
-                  <button className="text-blue-500 hover:underline">🔍</button>
+                  <button className="text-blue-500 hover:underline" onClick={() => detailsContract(index)}>d</button>
                 </td>
               </tr>
             ))}
@@ -54,7 +62,8 @@ const ContractsTable = () => {
       </div>
 
       <div className="flex justify-end mt-6 mx-8 mb-5">
-        <button className="bg-yellow-400 text-black font-semibold py-2 px-6 rounded-lg mx-3 w-[200px]">
+        <button className="bg-yellow-400 text-black font-semibold py-2 px-6 rounded-lg mx-3 w-[200px]"
+                onClick={handleButtonPrev}>
           Anterior
         </button>
         <button className="bg-green-500 text-white font-semibold py-2 px-6 rounded-lg w-[200px]"

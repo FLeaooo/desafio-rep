@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
-import '@/components/atomic/organisms/InvoiceForm.css';
 import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import '@/components/atomic/organisms/InvoiceForm.css';
 import Input from '@/components/atomic/molecules/Input';
 import AppContext from '@/contexts/AppContext';
 import { sendData } from '@/api/invoiceApi'
+import { useNavigate } from "react-router-dom";
+import HeaderContract from '@/components/atomic/molecules/HeaderContract'
 
 const InvoiceForm = () => {
   // Formulario
@@ -25,6 +26,7 @@ const InvoiceForm = () => {
       const response = await sendData(data);
       if (response.status == 201) {
         console.log(`Solicitação ${response.data.id} foi enviada com sucesso.`);
+        navigate(`/details/${response.data.authorId}`)
       }
     } catch (err) {
       console.log(err);
@@ -34,7 +36,8 @@ const InvoiceForm = () => {
   // Contrato e nota fiscal
   const [selectedContract, setSelectedContract] = useState(null);
   const { contractId } = useParams();
-  const { contracts } = useContext(AppContext);
+  const { user, contracts } = useContext(AppContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const foundContract = contracts.find(contract => contract.id.toString() === contractId);
@@ -42,6 +45,12 @@ const InvoiceForm = () => {
       setSelectedContract(foundContract);
     }
   }, [contracts, contractId]);
+
+  useEffect(() => {
+    if (selectedContract && selectedContract.invoice.id){
+      navigate(`/details/${selectedContract.invoice.authorId}`)
+    }
+  }, [selectedContract])
 
   // Calcular valor percentual
   const [valueRetention, setValueRetention] = useState(0);
@@ -59,6 +68,10 @@ const InvoiceForm = () => {
     }
   }, [inputValue, selectedContract, []]);
 
+  // Botao anterior
+  const handleButtonPrev = () => {
+    navigate(`/contracts/${user.cnpj}`)
+  }
 
   if (!selectedContract) {
     return <p>Carregando contrato...</p>;
@@ -67,14 +80,7 @@ const InvoiceForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="">
       <div className="red-div">
-        <div className="flex justify-around items-center">
-          <p className="font-semibold">
-            Código do contrato: <span className="font-normal">{selectedContract.contractCode}</span>
-          </p>
-          <p className="font-semibold">
-            Título: <span className="font-normal">{selectedContract.name}</span>
-          </p>
-        </div>
+        <HeaderContract code={selectedContract.contractCode} name={selectedContract.name}/>
 
         <div className="grid grid-cols-3 gap-4 mt-4">
           <div>
@@ -135,7 +141,7 @@ const InvoiceForm = () => {
       </div>
 
       <div className="flex justify-end mt-6">
-        <button type="button" className="px-4 py-2 bg-yellow-500 text-white rounded w-[200px] mx-3">Anterior</button>
+        <button type="button" className="px-4 py-2 bg-yellow-500 text-white rounded w-[200px] mx-3" onClick={handleButtonPrev}>Anterior</button>
         <button type="submit" className="px-4 py-2 bg-green-500 text-white rounded w-[200px] mx-3">Próximo</button>
       </div>
     </form>

@@ -29,7 +29,7 @@ const LoginForm = () => {
             businessName: response.data.businessName,
             tradingName: response.data.tradingName,
           });
-          navigate("/contracts");
+          navigate(`/contracts/${user.cnpj}`);
         }
       }
     } catch (err) {
